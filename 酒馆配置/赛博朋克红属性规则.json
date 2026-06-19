@@ -1,0 +1,32 @@
+{
+  "format": "acu_attr_preset_v1",
+  "version": "1.8.4",
+  "name": "赛博朋克红属性预设",
+  "description": "赛博朋克RED 10项基础属性（2-8，人类极限10）。点购分配，总计约62点。幸运为普通属性而非消耗品，与运气值池区分。",
+
+  "baseAttributes": [
+    { "name": "智力", "formula": "1d10", "range": [2, 10] },
+    { "name": "反应", "formula": "1d10", "range": [2, 10] },
+    { "name": "灵巧", "formula": "1d10", "range": [2, 10] },
+    { "name": "技术", "formula": "1d10", "range": [2, 10] },
+    { "name": "酷",   "formula": "1d10", "range": [2, 10] },
+    { "name": "意志", "formula": "1d10", "range": [2, 10] },
+    { "name": "运气", "formula": "1d10", "range": [2, 10] },
+    { "name": "移动", "formula": "1d10", "range": [2, 10] },
+    { "name": "体格", "formula": "1d10", "range": [2, 10] },
+    { "name": "共情", "formula": "1d10", "range": [2, 10] }
+  ],
+
+  "specialAttributes": [
+    { "name": "HP",   "formula": "10+5*((体格+意志)/2)", "range": [20, 60] },
+    { "name": "移速", "formula": "移动*2",                "range": [4, 20] },
+    { "name": "人性", "formula": "共情*10",               "range": [20, 100] }
+  ],
+
+  "quickSelect": {
+    "baseTarget": "attribute",
+    "specialTarget": "attribute",
+    "fallbackTarget": "attribute",
+    "nameTargetMapping": {}
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "kind": "advanced",
+  "name": "CPR检定",
+  "description": "1d10! ≥ DV 成功。自然10暴击追加1d10，自然1大失败。v2.3",
+  "diceExpression": "1d10!",
+  "attribute": {
+    "label": "检定值",
+    "placeholder": "手动填入属性+技能之和",
+    "defaultValue": 0
+  },
+  "dc": {
+    "label": "难度值 DV",
+    "placeholder": "9 13 15 17 21 24 29",
+    "defaultValue": 13
+  },
+  "derivedVars": [
+    {
+      "id": "total",
+      "expr": "$roll.total + $attr"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "crit_success",
+      "name": "暴击",
+      "condition": "$roll.total >= 10 && $total >= $dc",
+      "priority": 1,
+      "rank": 3,
+      "contestRank": 100,
+      "outputText": "⚡ $initiator — 暴击"
+    },
+    {
+      "id": "crit_failure",
+      "name": "暴击失败",
+      "condition": "$roll.total >= 10 && $total < $dc",
+      "priority": 2,
+      "rank": 1,
+      "contestRank": 50,
+      "outputText": "⚡ $initiator — 暴击失败"
+    },
+    {
+      "id": "fumble",
+      "name": "大失败",
+      "condition": "$roll.total == 1",
+      "priority": 3,
+      "rank": -1,
+      "contestRank": 0,
+      "outputText": "⚡ $initiator — 大失败"
+    },
+    {
+      "id": "success",
+      "name": "成功",
+      "condition": "$total >= $dc",
+      "priority": 10,
+      "rank": 2,
+      "contestRank": 60,
+      "outputText": "⚡ $initiator — 成功"
+    },
+    {
+      "id": "failure",
+      "name": "失败",
+      "condition": "true",
+      "priority": 99,
+      "rank": 0,
+      "contestRank": 40,
+      "outputText": "⚡ $initiator — 失败"
+    }
+  ],
+  "contestRule": {
+    "mode": "custom",
+    "customExpr": "$initValue > $oppValue",
+    "hideDc": true
+  },
+  "outputTemplate": "<meta:检定结果>\n$outcomeText\n━━━━━━━━━━━━━━━━━━\n🎲 1d10!+[$attr] = $roll.total + $attr = $total\n🎯 DV=$dc\n━━━━━━━━━━━━━━━━━━\n</meta:检定结果>",
+  "contestOutputTemplate": "<meta:检定结果>\n$outcomeText\n━━━━━━━━━━━━━━━━━━\n⚔️ 对抗检定\n🔵 $initiator：$initFormula → $initTotal\n🔴 $opponent：$oppFormula → $oppTotal\n🏆 胜者：【$winner】\n━━━━━━━━━━━━━━━━━━\n</meta:检定结果>",
+  "checkSuggestionGuide": {
+    "rule": "赛博朋克红检定：1d10! + 属性+技能 ≥ DV。自然10自动加骰（连续出10连续加），自然1直接大失败。DV：9=简单 13=普通 15=有挑战 17=困难 21=极难 24=几乎不可能 29=传说。伤害骰：直接掷武器伤害骰，不比较DV。",
+    "dsl": "检定 <角色> <属性技能> dc=<9|13|15|17|21|24|29>\n对抗 <发起者> <属性技能> vs <对手> <属性技能>\n伤害 <角色> <骰型>\n必成\n必败\n无",
+    "examples": "1. 检定 <user> 手枪 dc=15\n2. 对抗 <user> 搏击 vs <保安> 搏击\n3. 伤害 <user> 3d6"
+  },
+  "checkSuggestionAliases": {
+    "params": {
+      "难度": "dc",
+      "DV": "dc"
+    },
+    "values": {
+      "dc": {
+        "简单": 9,
+        "普通": 13,
+        "一般": 13,
+        "挑战": 15,
+        "有挑战": 15,
+        "困难": 17,
+        "极难": 21,
+        "几乎不可能": 24,
+        "传说": 29
+      }
+    }
+  },
+  "id": "custom_1781339248880",
+  "version": "1.9.0",
+  "createdAt": "2026-06-13T08:27:28.880Z",
+  "visible": true,
+  "order": 999,
+  "format": "acu_advanced_preset_v1"
+}

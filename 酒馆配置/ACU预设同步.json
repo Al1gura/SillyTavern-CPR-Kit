@@ -1,0 +1,16 @@
+{
+  "type": "script",
+  "enabled": true,
+  "name": "ACU预设同步",
+  "id": "",
+  "content": "// ACU预设同步 - 跨设备共享骰子系统预设\neventOn(getButtonEvent('上传'), () => {\n  var d = {\n    presets: localStorage.getItem('acu_advanced_presets_v1') || '',\n    attr: localStorage.getItem('acu_attribute_presets_v1') || ''\n  };\n  insertOrAssignVariables({ acu_sync_data: d }, { type: 'global' });\n  console.log('[ACU同步] 已上传');\n});\neventOn(getButtonEvent('下载'), () => {\n  var v = getVariables({ type: 'global' });\n  if (v && v.acu_sync_data) {\n    if (v.acu_sync_data.presets) localStorage.setItem('acu_advanced_presets_v1', v.acu_sync_data.presets);\n    if (v.acu_sync_data.attr) localStorage.setItem('acu_attribute_presets_v1', v.acu_sync_data.attr);\n    console.log('[ACU同步] 已下载，请刷新页面');\n    location.reload();\n  }\n});",
+  "info": "点击上传/下载按钮同步骰子系统预设",
+  "button": {
+    "enabled": true,
+    "buttons": [
+      { "name": "上传", "visible": true },
+      { "name": "下载", "visible": true }
+    ]
+  },
+  "data": {}
+}

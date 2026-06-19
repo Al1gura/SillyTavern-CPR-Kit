@@ -1,0 +1,13 @@
+{
+  "type": "script",
+  "enabled": true,
+  "name": "骰子前端-自动更新（开发版）",
+  "id": "6e7b896b-fcf7-44e2-a7a4-27cb6aaceb82",
+  "content": "async function getLatestVersion() {\n  try {\n    const response = await fetch('https://api.github.com/repos/jerryzmtz/my-tavern-scripts/tags');\n    const tags = await response.json();\n    return tags[0]?.name || 'main';\n  } catch {\n    return 'main';\n  }\n}\n\nconst version = await getLatestVersion();\nawait import(`https://testingcf.jsdelivr.net/gh/jerryzmtz/my-tavern-scripts@${version}/dist/骰子系统/stable.js`);\n\n// ===== ACU Color Patch: Colorize dice outcome names in chat =====\n(function(){\n  const s=document.createElement('style');\n  s.textContent='.acu-gold{color:#FFD700;font-weight:bold}.acu-orange{color:#FF6600;font-weight:bold}.acu-red{color:#FF0000;font-weight:bold}.acu-green{color:#27ae60;font-weight:bold}';\n  document.head.appendChild(s);\n\n  const re=/(—\\s*)(暴击|暴击失败|大失败|成功|失败)(?!<)/g;\n  const map={'暴击':'acu-gold','暴击失败':'acu-orange','大失败':'acu-red','成功':'acu-green','失败':'acu-red'};\n\n  function colorize(el){\n    const h=el.innerHTML;if(!h.includes('⚡'))return;\n    const r=h.replace(re,(m,p,n)=>p+'<span class=\"'+map[n]+'\">'+n+'</span>');\n    if(r!==h)el.innerHTML=r;\n  }\n\n  function waitForChat(){\n    const chat=document.getElementById('chat')||document.querySelector('.chat')||document.querySelector('[class*=\"chat\"]');\n    if(!chat){setTimeout(waitForChat,500);return}\n    chat.querySelectorAll('.mes_text').forEach(colorize);\n    new MutationObserver(function(mutations){\n      mutations.forEach(function(m){\n        m.addedNodes.forEach(function(n){\n          if(n.nodeType!==1)return;\n          var e=n.matches('.mes_text')?n:n.querySelector('.mes_text');\n          if(e)colorize(e);\n        });\n      });\n    }).observe(chat,{childList:true,subtree:true});\n  }\n  waitForChat();\n})();",
+  "info": "感谢a佬开源\n以九颜二改为基础进行三改\n@kousakayou\n内置颜色补丁：检定结果在聊天中显示彩色",
+  "button": {
+    "enabled": false,
+    "buttons": []
+  },
+  "data": {}
+}

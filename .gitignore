@@ -1,0 +1,16 @@
+# 缓存文件（酒馆自动生成，不需同步）
+缓存/
+
+# 临时文件
+临时文件夹/
+
+# 系统/IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+~$*
+
+# IDE
+.vscode/settings.json
+*.sublime-workspace

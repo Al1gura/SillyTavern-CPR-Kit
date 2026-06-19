@@ -1,0 +1,79 @@
+{
+  "kind": "advanced",
+  "name": "CPR伤害",
+  "description": "掷武器伤害骰。AI 发出「伤害」指令后匹配。v1.2",
+  "diceExpression": "1d6",
+  "dicePatches": [
+    {
+      "when": "$attr > 1",
+      "op": "append",
+      "template": "+1d6"
+    },
+    {
+      "when": "$attr > 2",
+      "op": "append",
+      "template": "+1d6"
+    },
+    {
+      "when": "$attr > 3",
+      "op": "append",
+      "template": "+1d6"
+    },
+    {
+      "when": "$attr > 4",
+      "op": "append",
+      "template": "+1d6"
+    },
+    {
+      "when": "$attr > 5",
+      "op": "append",
+      "template": "+1d6"
+    }
+  ],
+  "attribute": {
+    "label": "骰数",
+    "placeholder": "武器骰数（手枪2、步枪4等）",
+    "defaultValue": 2
+  },
+  "dc": {
+    "hidden": true,
+    "defaultValue": 0
+  },
+  "mod": {
+    "hidden": true,
+    "defaultValue": 0
+  },
+  "derivedVars": [
+    {
+      "id": "total",
+      "expr": "$roll.total"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "damage",
+      "name": "伤害",
+      "condition": "true",
+      "priority": 1,
+      "rank": 1,
+      "contestRank": 1,
+      "outputText": "💥 $initiator 受到 $roll.total 点伤害"
+    }
+  ],
+  "outputTemplate": "<meta:伤害>\n💥 **$initiator**\n$outcomeText\n🎲 $attr×1d6 → $roll.total\n</meta:伤害>",
+  "checkSuggestionGuide": {
+    "rule": "伤害骰：直接掷武器伤害骰，不比较DV。骰数取决于武器类型（中型手枪2d6、重型手枪3d6、步枪4d6、近战1~4d6、徒手=体格对应骰数）。",
+    "dsl": "伤害 <角色> <骰型>",
+    "examples": "3. 伤害 <user> 3d6"
+  },
+  "checkSuggestionAliases": {
+    "params": {},
+    "values": {}
+  },
+  "id": "custom_damage_001",
+  "version": "1.0.0",
+  "createdAt": "2026-06-17T18:00:00.000Z",
+  "visible": true,
+  "order": 998,
+  "format": "acu_advanced_preset_v1"
+}
